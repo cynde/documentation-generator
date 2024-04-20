@@ -48,6 +48,15 @@ const parseMdxContentToHtml = (content) => {
     // Paragraph
     content = content.replace(/\n\n/g, "</p><p>");
 
+    // Links
+    content = content.replace(/(\[(.*?)\]\((.*?)\))|(<(.+?@.+?)>)/g, function(match, innerText, linkText, href, email) {
+        if (linkText && href) {
+            return `<a href="${href}">${linkText}</a>`;
+        } else if (email) {
+            return `<a href="mailto:${email}">${email}</a>`;
+        }
+    });
+
     return content;
 }
 
