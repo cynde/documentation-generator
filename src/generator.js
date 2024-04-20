@@ -1,12 +1,13 @@
 const fs = require('fs');
-const parseMdxContentToHtml = require('./parser/MDXParser');
+const parseMDXContentToHtml = require('./parser/MDXParser');
+const parseYAMLContentToHtml = require('./parser/YAMLParser');
+const yaml = require('js-yaml');
 
 const readFile = (path) => {
     return fs.readFileSync(path, 'utf8');
 };
 
 const writeFile = (path, data) => {
-
     fs.copyFile('templates/styles/style.css', 'out/styles/style.css', (error) => {
         if (error) {
             throw error;
@@ -23,16 +24,17 @@ const writeFile = (path, data) => {
     });
 };
 
-const generateHTML = (template, content) => {
-    return template.replace(/{{ mdx-content }}/g, content);
-};
-
 const generateDocumentation = () => {
     const mdxFileContent = readFile('content/api.mdx');
-    const processedContent = parseMdxContentToHtml(mdxFileContent);
-    const generatedHtml = generateHTML(readFile('templates/index.html'), processedContent);
+    const parsedMDXContent = parseMDXContentToHtml(mdxFileContent);
+    const template = readFile('templates/index.html');
+    const htmlWithMDXContent = template.replace(/{{ mdx-content }}/g, parsedMDXContent);
+    
+    const yamlFileContent = readFile('content/openapi.yaml');
+    const yamlFileContentObject = yaml.load(yamlFileContent);
+    const result = parseYAMLContentToHtml(htmlWithMDXContent, yamlFileContentObject);
 
-    writeFile('out/docs.html', generatedHtml);
+    writeFile('out/docs.html', result);
 }
 
 generateDocumentation();

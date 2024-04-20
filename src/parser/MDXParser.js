@@ -1,4 +1,4 @@
-const parseMdxContentToHtml = (content) => {
+const parseMDXContentToHtml = (content) => {
     // Code blocks
     content = content.replace(/```([^ \t\n]+)?\n((?:.|\n)*?)\n```/gm, function(match, language, code) {
         const className = language ? `language-${language.toLowerCase()}` : "";
@@ -35,4 +35,4 @@ const parseMdxContentToHtml = (content) => {
     return content;
 }
 
-module.exports = parseMdxContentToHtml;
+module.exports = parseMDXContentToHtml;
