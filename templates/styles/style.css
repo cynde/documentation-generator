@@ -104,20 +104,73 @@ code {
 }
 
 .documentation {
-    margin: 10px 30px;
-    flex: 5;
-    margin-left: 300px;
+    flex: 4;
+    margin-left: 290px;
 }
 
 .api {
-    padding-bottom: 35px;
-    margin-bottom: 35px;
     border-bottom: 1px solid #28383e;
-    opacity: 0.8;
+    display: flex;
+}
+
+.left {
+    flex: 2;
+    padding-bottom: 35px;
+    padding-top: 20px;
+}
+
+.right {
+    flex: 1;
+    background-color: #28383e;
+    opacity: 0.97;
+    padding: 20px 30px 35px 30px;
+    color: white;
+}
+
+.method-endpoint {
+    margin: 18px 0;
+    background-color: black;
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+
+.method {
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 2px;
+}
+
+.endpoint {
+    margin-left: 10px;
+    font-family: Courier, monospace;
+}
+
+.green {
+    background-color: green;
+}
+
+.blue {
+    background-color: cornflowerblue;
+}
+
+.red {
+    background-color: darkred;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.purple {
+    background-color: purple;
 }
 
 #information {
-    margin-bottom: 50px;
+    display: flex;
+}
+
+#information .left {
+    margin-top: 10px;
 }
 
 #description {
@@ -156,7 +209,7 @@ code {
 }
 
 .parameters-content .row .schema {
-    flex: 5;
+    flex: 3;
 }
 
 .parameters-content .row .schema .type {
