@@ -1,0 +1,208 @@
+/* #efefef */
+/* #e6f0f2 */
+/* #cddee5 */
+/* #93b3cb */
+/* #7296a4 */
+/* #28383e */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Montserrat, sans-serif;
+    margin: 0;
+    color: #28383e;
+}
+
+p {
+    font-size: 14px;
+    margin: 7px 0;
+}
+
+main {
+    display: flex;
+}
+
+h1 {
+    font-size: 28px;
+    color: #7296a4;
+}
+
+h2 {
+    font-size: 22px;
+    color: #7296a4;
+    font-weight: normal;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+h4 {
+    font-size: 16px;
+}
+
+h5 {
+    font-size: 15px;
+}
+
+h6 {
+    font-size: 14px;
+}
+
+hr {
+    border-color: #93b3cb;
+    border-width: 0.5px;
+    opacity: 0.5;
+}
+
+pre {
+    background-color: #efefef;
+    opacity: 0.8;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+code {
+    font-size: 14px;
+}
+
+.sidebar {
+    background-color: #e6f0f2;
+    flex: 1;
+    padding: 10px 20px 10px 0;
+    position: fixed;
+    overflow-y: auto;
+    z-index: 1;
+    height: 100%;
+    width: 250px;
+}
+
+.sidebar ul {
+    font-size: 13px;
+}
+
+.sidebar li {
+    padding: 12px 10px;
+    border-radius: 5px;
+}
+
+.sidebar a {
+    color: #28383e;
+    text-decoration: none;
+}
+
+.sidebar li:hover {
+    background-color: #cddee5;
+    cursor: pointer;
+}
+
+.sidebar li::marker {
+  color: #7296a4;
+  content: '> ';
+}
+
+.documentation {
+    margin: 10px 30px;
+    flex: 5;
+    margin-left: 300px;
+}
+
+.api {
+    padding-bottom: 35px;
+    margin-bottom: 35px;
+    border-bottom: 1px solid #28383e;
+    opacity: 0.8;
+}
+
+#information {
+    margin-bottom: 50px;
+}
+
+#description {
+    margin-bottom: 30px;
+}
+
+.parameters-title {
+    text-transform: uppercase;
+    color: #93b3cb;
+    font-size: smaller;
+    margin-bottom: 0;
+}
+
+.parameters-content ul {
+    margin: 0;
+    padding-left: 15px;
+}
+
+.parameters-content .row {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.parameters-content .row .name {
+    flex: 1;
+    font-family: Courier, monospace;
+}
+
+.parameters-content .row .name::before {
+    color: #7296a4;
+    content: '. ';
+}
+
+.parameters-content .row .name span {
+    color: darkred;
+}
+
+.parameters-content .row .schema {
+    flex: 5;
+}
+
+.parameters-content .row .schema .type {
+    margin-bottom: 0;
+    color: #7296a4;
+    font-weight: 600;
+}
+
+.parameters-content .row .schema .description {
+    margin-top: 7px;
+}
+
+.parameters-content .row .schema .min, .parameters-content .row .schema .max {
+    color: gray;
+    font-style: italic;
+    margin-top: 0px;
+}
+
+.responses .item {
+    margin-bottom: 20px;
+}
+
+.responses .item:last-of-type {
+    margin-bottom: 0px;
+}
+
+.responses .schema {
+    text-transform: uppercase;
+    color: #93b3cb;
+    font-size: smaller;
+    margin-bottom: 0;
+    margin-right: 6px;
+}
+
+.responses #schema {
+    font-size: smaller;
+}
+
+.responses #status {
+    font-weight: bold;
+}
+
+.success {
+    color: green;
+}
+
+.failed {
+    color: darkred;
+}
