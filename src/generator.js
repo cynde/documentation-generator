@@ -38,8 +38,12 @@ const parseMdxContentToHtml = (content) => {
         return `<h${hash.length}>${content}</h${hash.length}>`;
     });
 
-    // Asterisks (*) for bold
+    // Asterisks (*) for bold and italics
     content = content.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    content = content.replace(/\*(.*?)\*/g, "<em>$1</em>");
+
+    // Underline (_) for italics
+    content = content.replace(/\_(.*?)\_/g, "<em>$1</em>");
 
     // Paragraph
     content = content.replace(/\n\n/g, "</p><p>");
