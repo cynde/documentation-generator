@@ -106,6 +106,13 @@ paths:
     get:
       summary: Get details of a specific post
       description: Retrieves information about a post by its ID.
+      parameters:
+        - in: path
+          name: postId
+          description: ID of the post
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Successful response
@@ -118,6 +125,13 @@ paths:
     put:
       summary: Update a post
       description: Updates an existing post in the system.
+      parameters:
+        - in: path
+          name: postId
+          description: ID of the post
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:

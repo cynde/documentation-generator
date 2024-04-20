@@ -150,7 +150,7 @@ code {
 }
 
 .blue {
-    background-color: cornflowerblue;
+    background-color: rgb(42, 81, 155);
 }
 
 .red {
@@ -252,10 +252,19 @@ code {
     font-weight: bold;
 }
 
-.success {
+.status-2xx {
     color: green;
 }
 
-.failed {
+.status-3xx {
+    color: orange;
+}
+
+.status-4xx {
     color: darkred;
+}
+
+.none {
+    font-family: Courier, monospace;
+    margin-bottom: 20px;
 }

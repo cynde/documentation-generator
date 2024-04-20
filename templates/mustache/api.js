@@ -8,14 +8,19 @@ const apiTemplate =
     '            <p class="parameters-title">Path Parameters</p>' +
     '            <hr />' +
     '            <div class="parameters-content">' +
+    '                {{^parameters.path}}' +
+    '                <p class="none">-</p>' +
+    '                {{/parameters.path}}' +
     '                <ul>' +
+    '                   {{#parameters.path}}' +
     '                    <li class="row">' +
-    '                        <p class="name">page <span>(required)</span></p>' +
+    '                        <p class="name">{{name}}{{#required}} <span>(required)</span>{{/required}}</p>' +
     '                        <div class="schema">' +
-    '                            <p class="type">integer</p>' +
-    '                            <p class="description">Page number (optional)</p>' +
+    '                            <p class="type">{{schema.type}}</p>' +
+    '                            <p class="description">{{description}}</p>' +
     '                        </div>' +
     '                    </li>' +
+    '                   {{/parameters.path}}' +
     '                </ul>' +
     '            </div>' +
     '        </div>' +
@@ -23,23 +28,21 @@ const apiTemplate =
     '            <p class="parameters-title">Query Parameters</p>' +
     '            <hr />' +
     '            <div class="parameters-content">' +
+    '                {{^parameters.query}}' +
+    '                <p class="none">-</p>' +
+    '                {{/parameters.query}}' +
     '                <ul>' +
+    '                   {{#parameters.query}}' +
     '                    <li class="row">' +
-    '                        <p class="name">page</p>' +
+    '                        <p class="name">{{name}}</p>' +
     '                        <div class="schema">' +
-    '                            <p class="type">integer</p>' +
-    '                            <p class="description">Page number (optional)</p>' +
-    '                            <p class="min">min: 1</p>' +
-    '                            <p class="max">max: 100</p>' +
+    '                            <p class="type">{{schema.type}}</p>' +
+    '                            <p class="description">{{description}}</p>' +
+    '                            {{#schema.min}}<p class="min">min: {{schema.min}}</p>{{/schema.min}}' +
+    '                            {{#schema.max}}<p class="max">max: {{schema.max}}</p>{{/schema.max}}' +
     '                        </div>' +
     '                    </li>' +
-    '                    <li class="row">' +
-    '                        <p class="name">page</p>' +
-    '                        <div class="schema">' +
-    '                            <p class="type">integer</p>' +
-    '                            <p class="description">Page number (optional)</p>' +
-    '                        </div>' +
-    '                    </li>' +
+    '                   {{/parameters.query}}' +
     '                </ul>' +
     '            </div>' +
     '        </div>' +
@@ -47,7 +50,7 @@ const apiTemplate =
     '            <h4>Responses</h4>' +
     '            {{#responses}}' +
     '            <div class="item">' +
-    '                <p><span id="status" class="success">{{status}}</span> <span id="description">{{description}}</span></p>' +
+    '                <p>{{#statusSpan}}{{status}}{{/statusSpan}} <span id="description">{{description}}</span></p>' +
     '                {{#content}}<span class="schema">Response Schema: </span><span id="schema">{{content}}</span>{{/content}}' +
     '            </div>' +
     '            {{/responses}}' +
@@ -55,7 +58,7 @@ const apiTemplate =
     '    </div>' +
     '    <div class="right">' +
     '        <div class="method-endpoint">' +
-    '            <p><span class="method green">{{method}}</span><span class="endpoint">{{endpoint}}</span></p>' +
+    '            <p>{{#methodSpan}}{{method}}{{/methodSpan}}<span class="endpoint">{{endpoint}}</span></p>' +
     '        </div>' +
     '    </div>' +
     '</div>'+
