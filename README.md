@@ -2,7 +2,7 @@
 This is a JavaScript project to help you generate a lightweight static documentation site from a markdown and an open API yaml file.
 
 ## Demo
-![](./demo/demo.mp4)
+https://github.com/cynde/documentation-generator/assets/16145430/fc78b470-190f-43d5-b102-9a6bdcf0f6ab
 
 ### What to do after clone
 1. Do not modify any codes
