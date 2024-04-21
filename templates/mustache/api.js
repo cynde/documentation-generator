@@ -1,6 +1,6 @@
 const apiTemplate = 
     '{{#apis}}' +
-    '<div class="api">' +
+    '<div class="api" id={{hrefLink}}>' +
     '    <div class="left">' +
     '        <h3 id="summary">{{summary}}</h3>' +
     '        <p id="description">{{description}}</p>' +

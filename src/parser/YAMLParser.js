@@ -1,5 +1,6 @@
 const Mustache = require('mustache');
 const apiTemplate = require('../../templates/mustache/api');
+const sidebarTemplate = require('../../templates/mustache/sidebar');
 
 const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
     const { paths: pathsObject } = yamlFileContentObject;
@@ -9,8 +10,9 @@ const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
         Object.keys(pathsObject[endpoint]).forEach((method) => {
             const api = {
                 ...pathsObject[endpoint][method],
-                method,
                 endpoint,
+                hrefLink: pathsObject[endpoint][method]['summary'].toLowerCase().replaceAll(' ', '-'),
+                method,
                 methodSpan: () => {
                     if (method.toLowerCase() === 'get') {
                         return (text, render) => {
@@ -96,8 +98,10 @@ const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
 
     const apiList = { apis: apisWithMappedResponsesAndParams };
 
-    const output = Mustache.render(apiTemplate, apiList);
-    return htmlWithMDXContent.replace(/{{ apis }}/g, output);
+    const content = Mustache.render(apiTemplate, apiList);
+    const contentWithSidebar = Mustache.render(sidebarTemplate, apiList);
+    const result = htmlWithMDXContent.replace(/{{ apis }}/g, content);
+    return result.replace(/{{ sidebar }}/g, contentWithSidebar);
 }
 
 module.exports = parseYAMLContentToHtml;
