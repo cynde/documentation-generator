@@ -2,36 +2,8 @@ const Mustache = require('mustache');
 const apiTemplate = require('../../templates/mustache/api');
 const sidebarTemplate = require('../../templates/mustache/sidebar');
 
-const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
-    const { paths: pathsObject } = yamlFileContentObject;
-
-    const apis = [];
-    const colors = {
-        'get': 'green',
-        'post': 'blue',
-        'put': 'purple',
-        'patch': 'orange',
-        'delete': 'red',
-    }
-    Object.keys(pathsObject).forEach((endpoint) => {
-        Object.keys(pathsObject[endpoint]).forEach((method) => {
-            const api = {
-                ...pathsObject[endpoint][method],
-                endpoint,
-                hrefLink: pathsObject[endpoint][method]['summary']?.toLowerCase().replaceAll(' ', '-'),
-                method,
-                methodSpan: () => {
-                    return (text, render) => {
-                        const content = render(text).length > 5 ? render(text).substring(0,3) : render(text);
-                        return `<span class="method ${colors[method.toLowerCase()]}">${content}</span>`;
-                    }
-                }
-            };
-            apis.push(api);
-        });
-    });
-
-    const apisWithMappedResponses = apis.map((api) => {
+const mapResponses = (apis) => {
+    return apis.map((api) => {
         const { responses } = api;
         const mappedResponses = Object.keys(responses).map((status) => {
             return {
@@ -63,8 +35,10 @@ const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
             responses: mappedResponses
         };
     });
+};
 
-    const apisWithMappedResponsesAndParams = apisWithMappedResponses.map((api) => {
+const mapParameters = (apis) => {
+    return apis.map((api) => {
         const { parameters } = api;
         if (parameters) {
             const parametersGroupedByType = parameters.reduce((group, item) => {
@@ -83,8 +57,10 @@ const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
         }
         return { ...api };
     });
+};
 
-    const apisWithMappedResponsesAndParamsAndRequestBody = apisWithMappedResponsesAndParams.map((api) => {
+const mapRequestBody = (apis) => {
+    return apis.map((api) => {
         const { requestBody } = api;
         if (requestBody) {
             const properties = requestBody['content'][Object.keys(requestBody.content)[0]]?.schema?.properties;
@@ -114,8 +90,10 @@ const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
         };
         return { ...api };
     });
-    
-    const apisWithMappedResponsesAndParamsAndRequestBodyAndHeaders = apisWithMappedResponsesAndParamsAndRequestBody.map((api) => {
+};
+
+const mapHeaders = (apis) => {
+    return apis.map((api) => {
         const { headers } = api;
         if (headers) {
             const mappedHeaders = Object.keys(headers).map((name) => {
@@ -135,9 +113,43 @@ const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
         }
         return { ...api };
     });
+};
+
+const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
+    const { paths: pathsObject } = yamlFileContentObject;
+
+    const apis = [];
+    const colors = {
+        'get': 'green',
+        'post': 'blue',
+        'put': 'purple',
+        'patch': 'orange',
+        'delete': 'red',
+    }
+    Object.keys(pathsObject).forEach((endpoint) => {
+        Object.keys(pathsObject[endpoint]).forEach((method) => {
+            const api = {
+                ...pathsObject[endpoint][method],
+                endpoint,
+                hrefLink: pathsObject[endpoint][method]['summary']?.toLowerCase().replaceAll(' ', '-'),
+                method,
+                methodSpan: () => {
+                    return (text, render) => {
+                        const content = render(text).length > 5 ? render(text).substring(0,3) : render(text);
+                        return `<span class="method ${colors[method.toLowerCase()]}">${content}</span>`;
+                    }
+                }
+            };
+            apis.push(api);
+        });
+    });
+
+    const apisWithMappedResponses = mapResponses(apis);
+    const apisWithMappedResponsesAndParams = mapParameters(apisWithMappedResponses);
+    const apisWithMappedResponsesAndParamsAndRequestBody = mapRequestBody(apisWithMappedResponsesAndParams);
+    const apisWithMappedResponsesAndParamsAndRequestBodyAndHeaders = mapHeaders(apisWithMappedResponsesAndParamsAndRequestBody);
 
     const apiList = { apis: apisWithMappedResponsesAndParamsAndRequestBodyAndHeaders };
-
     const content = Mustache.render(apiTemplate, apiList);
     const contentWithSidebar = Mustache.render(sidebarTemplate, apiList);
     const result = htmlWithMDXContent.replace(/{{ apis }}/g, content);

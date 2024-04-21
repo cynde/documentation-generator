@@ -19,7 +19,7 @@ const writeFile = (path, data) => {
         if (error)
             console.log(`Write file error: ${error}`);
         else {
-            console.log('HTML file is generated successfully');
+            console.log('HTML file is generated');
         }
     });
 };
