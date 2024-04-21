@@ -228,6 +228,22 @@ code {
     margin-top: 0px;
 }
 
+.request-body .schema {
+    text-transform: none;
+    color: initial;
+}
+
+.request-body .required {
+    text-transform: none;
+    color: darkred;
+    font-family: Courier, monospace;
+}
+
+.request-body .type {
+    color: #7296a4;
+    font-weight: 600;
+}
+
 .responses .item {
     margin-bottom: 15px;
 }

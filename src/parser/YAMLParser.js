@@ -11,7 +11,7 @@ const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
             const api = {
                 ...pathsObject[endpoint][method],
                 endpoint,
-                hrefLink: pathsObject[endpoint][method]['summary'].toLowerCase().replaceAll(' ', '-'),
+                hrefLink: pathsObject[endpoint][method]['summary']?.toLowerCase().replaceAll(' ', '-'),
                 method,
                 methodSpan: () => {
                     if (method.toLowerCase() === 'get') {
@@ -96,7 +96,38 @@ const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
         return { ...api };
     });
 
-    const apiList = { apis: apisWithMappedResponsesAndParams };
+    const apisWithMappedResponsesAndParamsAndRequestBody = apisWithMappedResponsesAndParams.map((api) => {
+        const { requestBody } = api;
+        if (requestBody) {
+            const properties = requestBody['content'][Object.keys(requestBody.content)[0]]?.schema?.properties;
+            let mappedProperties = [];
+            if (properties) {
+                mappedProperties = Object.keys(properties).map((name) => {
+                    return {
+                        name,
+                        type: properties[name].type,
+                        required: properties[name].required,
+                        description: properties[name].description,
+                    }
+                });
+            }
+
+            const mappedRequestBody = {
+                required: requestBody.required,
+                schema: Object.keys(requestBody.content)[0],
+                type: requestBody['content'][Object.keys(requestBody.content)[0]]?.schema?.type,
+                properties: mappedProperties
+            };
+
+            return {
+                ...api,
+                requestBody: mappedRequestBody
+            }
+        };
+        return { ...api };
+    });
+
+    const apiList = { apis: apisWithMappedResponsesAndParamsAndRequestBody };
 
     const content = Mustache.render(apiTemplate, apiList);
     const contentWithSidebar = Mustache.render(sidebarTemplate, apiList);

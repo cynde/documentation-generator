@@ -46,6 +46,26 @@ const apiTemplate =
     '                </ul>' +
     '            </div>' +
     '        </div>' +
+    '        {{#requestBody}}' +
+    '        <div class="request-body">' +
+    '            <p class="parameters-title">Request Body Schema: <span class="schema">{{schema}}</span>{{#required}} <span class="required">(required)</span>{{/required}}</p>' +
+    '            <hr />' +
+    '            <div class="parameters-content">' +
+'                   <ul>' +
+    '                   <p>type: <span class="type">{{type}}</span></p>' +
+    '                   {{#properties}}' +
+    '                    <li class="row">' +
+    '                        <p class="name">{{name}}{{#required}} <span class="required">(required)</span>{{/required}}</p>' +
+    '                        <div class="schema">' +
+    '                            <p class="type">{{type}}</p>' +
+    '                            <p class="description">{{description}}</p>' +
+    '                        </div>' +
+    '                    </li>' +
+    '                   {{/properties}}' +
+    '                </ul>' +
+    '            </div>' +
+    '        </div>' +
+    '        {{/requestBody}}' +
     '        <div class="responses">' +
     '            <h4>Responses</h4>' +
     '            {{#responses}}' +
