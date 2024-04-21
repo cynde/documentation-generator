@@ -2,7 +2,7 @@
 This is a JavaScript project to help you generate a lightweight static documentation site from a markdown and an open API yaml file.
 
 ## Demo
-![](./demo/demo.mov)
+![](./demo/demo.mp4)
 
 ### What to do after clone
 1. Do not modify any codes
