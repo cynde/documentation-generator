@@ -17,6 +17,6 @@ This is a JavaScript project to help you generate a lightweight static documenta
 #### Folder structure:
 * `content`: markdown and open API yaml file
 * `demo`: generated files for the demo site
-* `out`: generated files for the documentation generator output
+* `out`: generated files for the documentation generator output site
 * `src`: logic codes
 * `templates`: HTML, CSS, and JavaScript files for the site template
