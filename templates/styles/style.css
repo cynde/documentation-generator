@@ -81,11 +81,16 @@ code {
 
 .sidebar ul {
     font-size: 13px;
+    padding-left: 15px;
 }
 
 .sidebar li {
     padding: 12px 10px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
 }
 
 .sidebar a {
@@ -137,6 +142,9 @@ code {
     text-transform: uppercase;
     padding: 5px 10px;
     border-radius: 2px;
+    color: white;
+    min-width: 43px;
+    text-align: center;
 }
 
 .endpoint {

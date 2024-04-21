@@ -6,6 +6,13 @@ const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
     const { paths: pathsObject } = yamlFileContentObject;
 
     const apis = [];
+    const colors = {
+        'get': 'green',
+        'post': 'blue',
+        'put': 'purple',
+        'patch': 'orange',
+        'delete': 'red',
+    }
     Object.keys(pathsObject).forEach((endpoint) => {
         Object.keys(pathsObject[endpoint]).forEach((method) => {
             const api = {
@@ -14,30 +21,9 @@ const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
                 hrefLink: pathsObject[endpoint][method]['summary']?.toLowerCase().replaceAll(' ', '-'),
                 method,
                 methodSpan: () => {
-                    if (method.toLowerCase() === 'get') {
-                        return (text, render) => {
-                            return '<span class="method green">' + render(text) + '</span>';
-                        }
-                    }
-                    else if (method.toLowerCase() === 'post') {
-                        return (text, render) => {
-                            return '<span class="method blue">' + render(text) + '</span>';
-                        }
-                    }
-                    else if (method.toLowerCase() === 'put') {
-                        return (text, render) => {
-                            return '<span class="method purple">' + render(text) + '</span>';
-                        }
-                    }
-                    else if (method.toLowerCase() === 'patch') {
-                        return (text, render) => {
-                            return '<span class="method orange">' + render(text) + '</span>';
-                        }
-                    }
-                    else if (method.toLowerCase() === 'delete') {
-                        return (text, render) => {
-                            return '<span class="method red">' + render(text) + '</span>';
-                        }
+                    return (text, render) => {
+                        const content = render(text).length > 5 ? render(text).substring(0,3) : render(text);
+                        return `<span class="method ${colors[method.toLowerCase()]}">${content}</span>`;
                     }
                 }
             };
