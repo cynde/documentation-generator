@@ -93,7 +93,6 @@ const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
                 parameters: parametersGroupedByType,
                 hasPathParameters: Object.keys(parametersGroupedByType).includes('path'),
                 hasQueryParameters: Object.keys(parametersGroupedByType).includes('query'),
-                hasHeaderParameters: Object.keys(parametersGroupedByType).includes('header'),
             };
         }
         return { ...api };
@@ -129,8 +128,29 @@ const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
         };
         return { ...api };
     });
+    
+    const apisWithMappedResponsesAndParamsAndRequestBodyAndHeaders = apisWithMappedResponsesAndParamsAndRequestBody.map((api) => {
+        const { headers } = api;
+        if (headers) {
+            const mappedHeaders = Object.keys(headers).map((name) => {
+                return {
+                    name,
+                    required: headers[name].required,
+                    description: headers[name].description,
+                    type: headers[name].schema?.type,
+                }
+            });
+            
+            return {
+                ...api,
+                hasHeaderParameters: true,
+                headers: mappedHeaders
+            }
+        }
+        return { ...api };
+    });
 
-    const apiList = { apis: apisWithMappedResponsesAndParamsAndRequestBody };
+    const apiList = { apis: apisWithMappedResponsesAndParamsAndRequestBodyAndHeaders };
 
     const content = Mustache.render(apiTemplate, apiList);
     const contentWithSidebar = Mustache.render(sidebarTemplate, apiList);

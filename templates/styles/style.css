@@ -209,7 +209,7 @@ code {
 }
 
 .parameters-content .row .schema {
-    flex: 3;
+    flex: 2;
 }
 
 .parameters-content .row .schema .type {

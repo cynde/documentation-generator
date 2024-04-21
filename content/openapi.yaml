@@ -35,6 +35,12 @@ paths:
             type: integer
             minimum: 1
             maximum: 100
+      headers:
+        Authorization:
+          required: true
+          description: An authorization token for authentication
+          schema:
+            type: string
     post:
       summary: Create a new user
       description: Creates a new user in the system.
@@ -62,6 +68,12 @@ paths:
                 $ref: '#/components/schemas/User'
         '400':
           description: Bad request (invalid user data)
+      headers:
+        Authorization:
+          required: true
+          description: An authorization token for authentication
+          schema:
+            type: string
   /users/{userId}:
     get:
       summary: Get details of a specific user
@@ -80,6 +92,12 @@ paths:
           name: userId
           description: ID of the user
           required: true
+          schema:
+            type: string
+      headers:
+        Authorization:
+          required: true
+          description: An authorization token for authentication
           schema:
             type: string
   /posts:
@@ -111,6 +129,12 @@ paths:
             type: integer
             minimum: 1
             maximum: 100
+      headers:
+        Authorization:
+          required: true
+          description: An authorization token for authentication
+          schema:
+            type: string
   /posts/{postId}:
     get:
       summary: Get details of a specific post
@@ -131,6 +155,12 @@ paths:
                 $ref: '#/components/schemas/Post'
         '404':
           description: Post not found
+      headers:
+        Authorization:
+          required: true
+          description: An authorization token for authentication
+          schema:
+            type: string
     put:
       summary: Update a post
       description: Updates an existing post in the system.
@@ -167,6 +197,12 @@ paths:
           description: Bad request (invalid post data)
         '404':
           description: Post not found
+      headers:
+        Authorization:
+          required: true
+          description: An authorization token for authentication
+          schema:
+            type: string
   /comments:
     post:
       summary: Create a new comment
