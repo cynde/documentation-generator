@@ -2,7 +2,7 @@ const sidebarTemplate =
     '<div class="sidebar">' +
     '   <ul>' +
     '   {{#apis}}' +
-    '       <li><a href="#{{hrefLink}}">{{summary}}</a></li>' +
+    '       <a href="#{{hrefLink}}"><li>{{summary}}</li></a>' +
     '   {{/apis}}' +
     '   </ul>'+
     '</div>';
