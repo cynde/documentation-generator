@@ -4,13 +4,11 @@ const apiTemplate =
     '    <div class="left">' +
     '        <h3 id="summary">{{summary}}</h3>' +
     '        <p id="description">{{description}}</p>' +
+    '        {{#hasPathParameters}}' +
     '        <div class="path-parameters">' +
     '            <p class="parameters-title">Path Parameters</p>' +
     '            <hr />' +
     '            <div class="parameters-content">' +
-    '                {{^parameters.path}}' +
-    '                <p class="none">-</p>' +
-    '                {{/parameters.path}}' +
     '                <ul>' +
     '                   {{#parameters.path}}' +
     '                    <li class="row">' +
@@ -24,13 +22,12 @@ const apiTemplate =
     '                </ul>' +
     '            </div>' +
     '        </div>' +
+    '        {{/hasPathParameters}}' +
+    '        {{#hasQueryParameters}}' +
     '        <div class="query-parameters">' +
     '            <p class="parameters-title">Query Parameters</p>' +
     '            <hr />' +
     '            <div class="parameters-content">' +
-    '                {{^parameters.query}}' +
-    '                <p class="none">-</p>' +
-    '                {{/parameters.query}}' +
     '                <ul>' +
     '                   {{#parameters.query}}' +
     '                    <li class="row">' +
@@ -46,6 +43,7 @@ const apiTemplate =
     '                </ul>' +
     '            </div>' +
     '        </div>' +
+    '        {{/hasQueryParameters}}' +
     '        {{#requestBody}}' +
     '        <div class="request-body">' +
     '            <p class="parameters-title">Request Body Schema: <span class="schema">{{schema}}</span>{{#required}} <span class="required">(required)</span>{{/required}}</p>' +

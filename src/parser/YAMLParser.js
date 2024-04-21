@@ -90,7 +90,10 @@ const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
 
             return {
                 ...api,
-                parameters: parametersGroupedByType
+                parameters: parametersGroupedByType,
+                hasPathParameters: Object.keys(parametersGroupedByType).includes('path'),
+                hasQueryParameters: Object.keys(parametersGroupedByType).includes('query'),
+                hasHeaderParameters: Object.keys(parametersGroupedByType).includes('header'),
             };
         }
         return { ...api };
