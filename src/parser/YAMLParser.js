@@ -2,6 +2,36 @@ const Mustache = require('mustache');
 const apiTemplate = require('../../templates/mustache/api');
 const sidebarTemplate = require('../../templates/mustache/sidebar');
 
+const mapApis = (pathsObject) => {
+    const apis = [];
+    const colors = {
+        'get': 'green',
+        'post': 'blue',
+        'put': 'purple',
+        'patch': 'orange',
+        'delete': 'red',
+    }
+    Object.keys(pathsObject).forEach((endpoint) => {
+        Object.keys(pathsObject[endpoint]).forEach((method) => {
+            const api = {
+                ...pathsObject[endpoint][method],
+                endpoint,
+                hrefLink: pathsObject[endpoint][method]['summary']?.toLowerCase().replaceAll(' ', '-'),
+                method,
+                methodSpan: () => {
+                    return (text, render) => {
+                        const content = render(text).length > 5 ? render(text).substring(0,3) : render(text);
+                        return `<span class="method ${colors[method.toLowerCase()]}">${content}</span>`;
+                    }
+                }
+            };
+            apis.push(api);
+        });
+    });
+
+    return apis;
+};
+
 const mapResponses = (apis) => {
     return apis.map((api) => {
         const { responses } = api;
@@ -118,32 +148,7 @@ const mapHeaders = (apis) => {
 const parseYAMLContentToHtml = (htmlWithMDXContent, yamlFileContentObject) => {
     const { paths: pathsObject } = yamlFileContentObject;
 
-    const apis = [];
-    const colors = {
-        'get': 'green',
-        'post': 'blue',
-        'put': 'purple',
-        'patch': 'orange',
-        'delete': 'red',
-    }
-    Object.keys(pathsObject).forEach((endpoint) => {
-        Object.keys(pathsObject[endpoint]).forEach((method) => {
-            const api = {
-                ...pathsObject[endpoint][method],
-                endpoint,
-                hrefLink: pathsObject[endpoint][method]['summary']?.toLowerCase().replaceAll(' ', '-'),
-                method,
-                methodSpan: () => {
-                    return (text, render) => {
-                        const content = render(text).length > 5 ? render(text).substring(0,3) : render(text);
-                        return `<span class="method ${colors[method.toLowerCase()]}">${content}</span>`;
-                    }
-                }
-            };
-            apis.push(api);
-        });
-    });
-
+    const apis = mapApis(pathsObject);
     const apisWithMappedResponses = mapResponses(apis);
     const apisWithMappedResponsesAndParams = mapParameters(apisWithMappedResponses);
     const apisWithMappedResponsesAndParamsAndRequestBody = mapRequestBody(apisWithMappedResponsesAndParams);
